@@ -83,6 +83,7 @@ public class Alumno {
             stmt.setInt(2, edad);
             stmt.setString(3, sexo);
             stmt.setString(4, correo);
+            stmt.setString(5, matricula);
             stmt.executeUpdate();
         }catch (Exception e){
             throw new SQLException();
@@ -112,6 +113,19 @@ public class Alumno {
         }catch (Exception e){
             throw new SQLException();
         }
+    }
+
+    /* ToString */
+    @Override
+    public String toString() {
+        return "Alumno{" +
+                "id=" + id +
+                ", matricula='" + matricula + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", edad=" + edad +
+                ", sexo='" + sexo + '\'' +
+                ", correo='" + correo + '\'' +
+                '}';
     }
 
     /* Getters y Setters */

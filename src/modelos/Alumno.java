@@ -115,17 +115,33 @@ public class Alumno {
         }
     }
 
+    public static Integer total() throws SQLException {
+        try(
+                Connection con = Conexion.createConnection();
+                PreparedStatement stmt = con.prepareStatement("SELECT COUNT(*) FROM Alumno");
+        ){
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+            return null;
+        }catch (Exception e){
+            throw new SQLException();
+        }
+    }
+
     /* ToString */
     @Override
     public String toString() {
-        return "Alumno{" +
-                "id=" + id +
-                ", matricula='" + matricula + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", edad=" + edad +
-                ", sexo='" + sexo + '\'' +
-                ", correo='" + correo + '\'' +
-                '}';
+        return """
+            ----------------------------------------
+            ID         : %d
+            Matrícula  : %s
+            Nombre     : %s
+            Edad       : %d
+            Sexo       : %s
+            Correo     : %s
+            """.formatted(id, matricula, nombre, edad, sexo, correo);
     }
 
     /* Getters y Setters */

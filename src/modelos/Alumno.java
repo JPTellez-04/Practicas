@@ -48,7 +48,8 @@ public class Alumno {
                 this.id = rs.getInt(1);
             }
         }catch (Exception e){
-            throw new SQLException();
+            //throw new SQLException();
+            e.printStackTrace();
         }
     }
 

@@ -90,6 +90,7 @@ public class Main {
 
         } catch (SQLException e) {
             System.out.println("\nNo fue posible registrar al alumno.");
+            e.printStackTrace();
         }
     }
 

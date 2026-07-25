@@ -9,7 +9,7 @@ public class Conexion {
     private static final String contraseña = "ClanRagnar45#";
     private static final String port = "1433";
     private static final String host = "localhost";
-    private static final String dataBaseName = "Animals";
+    private static final String dataBaseName = "STUDENT_DB";
     private static final String server = "sqlserver";
     //private static final String url = "jdbc:sqlserver://localhost:%s;databaseName=Animals;encrypt=true;trustServerCertificate=true";
 

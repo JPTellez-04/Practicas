@@ -1,13 +1,64 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import java.util.Scanner;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+class Main{
+    public static Scanner input = new Scanner(System.in);
+    public static void main(String[] args){
+        Estacionamiento estacionamiento = new Estacionamiento();
+        menu(estacionamiento);
+    }
+    public static void menu(Estacionamiento estacionamiento){
+        boolean conditional = true;
+        while(conditional) {
+            try {
+                System.out.println("Menu");
+                System.out.println("1. Agregar Vehiculo");
+                System.out.println("2. Mostrar Reporte");
+                System.out.println("3. Salir");
+                System.out.print("Ingresar desicion: ");
+                int opcion = input.nextInt();
+                input.nextLine();
+                switch (opcion) {
+                    case 1 -> estacionamiento.registerVehicle(registerVehicle());
+                    case 2 -> estacionamiento.printParkingLot();
+                    case 3 -> conditional = false;
+                    default -> System.out.println("Invalid Option");
+                }
+            } catch (Exception e) {
+                System.out.println("Error, vuelve a ingresar");
+            }
+        }
+    }
+    public static Vehiculo registerVehicle(){
+        try{
+            System.out.print("Ingresar la placa del vehiculo: ");
+            String placa = input.nextLine();
+            System.out.print("Ingresar las horas que lleva en el estamcionameinto el vehiculo: ");
+            Integer horas = input.nextInt();
+            input.nextLine();
+            boolean condicion = true;
+            while(condicion) {
+                System.out.println("Tipos de Vehiculos ");
+                System.out.println("1. Auto - 2.Moto - 3.Camion");
+                System.out.print("Ingresa tu desicion: ");
+                int opcion = input.nextInt();
+                input.nextLine();
+                switch (opcion) {
+                    case 1 -> {
+                        return new Auto(placa, horas);
+                    }
+                    case 2 -> {
+                        return new Moto(placa, horas);
+                    }
+                    case 3 -> {
+                        return new Camion(placa, horas);
+                    }
+                    default -> System.out.println("Opcion invalida");
+
+                }
+            }
+        }catch(Exception e){
+            System.out.println("Error, vuelve a ingresar");
+        }
+        return null;
     }
 }

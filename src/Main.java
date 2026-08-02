@@ -18,7 +18,12 @@ class Main{
                 int opcion = input.nextInt();
                 input.nextLine();
                 switch (opcion) {
-                    case 1 -> estacionamiento.registerVehicle(registerVehicle());
+                    case 1 -> {
+                        estacionamiento.registerVehicle(registerVehicle());
+                        Vehiculo vehiculo = registerVehicle();
+                        estacionamiento.registerVehicle(vehiculo);
+                        EstacionamientoDAO.insertar(vehiculo);
+                    }
                     case 2 -> estacionamiento.printParkingLot();
                     case 3 -> conditional = false;
                     default -> System.out.println("Invalid Option");

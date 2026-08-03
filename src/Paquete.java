@@ -1,12 +1,13 @@
 public abstract class Paquete {
     private String nombreDestinatario = "";
     private double pesoKg = 0.0;
-    EstrategiaEnvio Estrategia = new EstrategiaEnvio();
+    EstrategiaEnvio Estrategia;
+    private int id;
 
     public Paquete(String nombreDestinatario, double pesoKg, EstrategiaEnvio estrategia) {
         this.nombreDestinatario = nombreDestinatario;
         this.pesoKg = pesoKg;
-        Estrategia = estrategia;
+        this.Estrategia = estrategia;
     }
 
     public double obtenerCostoEnvio(){
@@ -36,5 +37,13 @@ public abstract class Paquete {
 
     public void setEstrategia(EstrategiaEnvio estrategia) {
         Estrategia = estrategia;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

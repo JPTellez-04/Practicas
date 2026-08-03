@@ -9,4 +9,7 @@ public class EnvioEstandar implements EstrategiaEnvio{
     public boolean esRecargoUnico() {
         return false;
     }
+    public String toString() {
+        return "Estándar";
+    }
 }

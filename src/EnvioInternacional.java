@@ -7,4 +7,7 @@ public class EnvioInternacional implements EstrategiaEnvio{
     public boolean esRecargoUnico() {
         return true;
     }
+    public String toString() {
+        return "Internacional";
+    }
 }

@@ -10,13 +10,18 @@ public class UsuarioDAO {
                 VALUES(?,?,?,?)
                 """;
         try(Connection con = Conexion.createConnection();
-            PreparedStatement ps = con.prepareStatement(sql)){
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             ps.setString(1, usuario.getCorreoElectronico());
             ps.setInt(2, usuario.getMesesActivo());
             ps.setString(3, usuario.getPlan().toString());
             ps.setDouble(4,usuario.ObtenerTotalAPagar());
             System.out.println(usuario.getPlan().toString());
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                int id = rs.getInt(1); // Primer campo generado (IDENTITY)
+                usuario.setId(id);     // Guarda el ID en tu objeto
+            }
         }catch(SQLException e){
             e.printStackTrace();
         }

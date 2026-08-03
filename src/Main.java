@@ -57,7 +57,7 @@ class Main {
         double TotalRecaudado = 0.0;
         System.out.println("--- Desglose total ---");
         for (CuentaUsuario U : UsuarioDAO.obtenerTodos()){
-            System.out.println("Usuario: " + Conteo + "\nCorreo: " + U.getCorreoElectronico() + " \nMeses activo: " + U.getMesesActivo() + " \nPlan: " + U.getPlan() + " \nTotal a pagar: $" + U.ObtenerTotalAPagar() + "\n      - - - - - - ");
+            System.out.println("Usuario: " + U.getId() + "\nCorreo: " + U.getCorreoElectronico() + " \nMeses activo: " + U.getMesesActivo() + " \nPlan: " + U.getPlan() + " \nTotal a pagar: $" + U.ObtenerTotalAPagar() + "\n      - - - - - - ");
             Conteo ++;
 
             TotalRecaudado += U.ObtenerTotalAPagar();

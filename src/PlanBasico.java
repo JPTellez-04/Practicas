@@ -10,6 +10,6 @@ public class PlanBasico implements PlanSuscripcion{
 
     @Override
     public String toString() {
-        return "Básico";
+        return "Basico";
     }
 }

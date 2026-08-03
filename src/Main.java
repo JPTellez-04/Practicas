@@ -9,29 +9,31 @@ class Main {
         int opc = 0;
         do {
             do {
-                System.out.println("--- MENÚ ---");
-                System.out.println("Ingrese la acción que desea realizar");
-                System.out.println("1) Registrar usuario");
-                System.out.println("2) Mostrar reporte");
-                System.out.println("0) Salir");
+                System.out.println("1. Registrar usuario");
+                System.out.println("2. Mostrar reporte");
+                System.out.println("3. Actualizar usuario");
+                System.out.println("4. Eliminar usuario");
+                System.out.println("5. Contar usuarios");
+                System.out.println("0. Salir");
                 try{
                     opc = teclado.nextInt();
                     teclado.nextLine();
                     switch (opc){
-                        case 1:
-                            RegistroUsuarios();
-                            break;
-                        case 2:
-                            Reporte();
-                            break;
-                        case 0:
+                        case 1 -> RegistroUsuarios();
+                        case 2 -> Reporte();
+                        case 3 -> ActualizarUsuario();
+                        case 4  -> EliminarUsuario();
+                        case 5 -> {
+                            System.out.println("--------------------------------");
+                            System.out.println("Usuarios registrados: " + UsuarioDAO.contar());
+                            System.out.println("--------------------------------");
+                        }
+                        case 0 -> {
                             System.out.println("Saliendo...");
-                            break;
-                        default:
-                            System.out.println("Error. Ingrese un valor correcto.");
-                            break;
+                            Salir = true;
+                        }
+                        default -> System.out.println("Error. Ingrese un valor correcto.");
                     }
-                    Salir = true;
                 }catch (Exception ex){
                     System.out.println("Error. Ingrese un valor correcto.");
                     teclado.nextLine();
@@ -45,58 +47,72 @@ class Main {
         PlanSuscripcion Plan = null;
 
         System.out.println("--- Registro de usuario ---");
-        System.out.println("Ingrese el correo de perfil");
-        String Correo = teclado.nextLine();
-        System.out.println("Ingrese la cantidad de meses que desea activar");
-        int meses = teclado.nextInt();
-        do {
-            System.out.println("Ingrese el tipo de plan que desea");
-            System.out.println("1) Plan básico");
-            System.out.println("2) Plan Estándar");
-            System.out.println("3) Plan Premium");
-            try{
-                int opc = teclado.nextInt();
-                teclado.nextLine();
-                switch (opc){
-                    case 1:
-                        Plan = new PlanBasico();
-                        break;
-                    case 2:
-                        Plan = new PlanEstandar();
-                        break;
-                    case 3:
-                        Plan = new PlanPremium();
-                        break;
-                    default:
-                        System.out.println("Error. Ingrese un valor correcto.");
-                        break;
-                }
-                Salir = true;
-            }catch (Exception ex){
-                System.out.println("Error. Ingrese un valor correcto.");
-                teclado.nextLine();
-            }
-        }while(!Salir);
-        System.out.println("Registro realizado correctamente.");
-        Usuario Usuario = new Usuario(Correo, meses, Plan);
-        Plataforma.RegistrarUsuarios(Usuario);
+
+        Usuario Usuario = leerUsuario();
+        UsuarioDAO.insertar(Usuario);
     }
     int i = 10;
     public static void Reporte(){
         int Conteo = 1;
         double TotalRecaudado = 0.0;
         System.out.println("--- Desglose total ---");
-        if (Plataforma.ListaUsuarios.isEmpty()){
-            System.out.println("Lista vacía");
-        }
-        for (CuentaUsuario U : Plataforma.ListaUsuarios){
-            System.out.println("Usuario: " + Conteo + " correo: " + U.getCorreoElectronico() + " meses activo: " + U.getMesesActivo() + " plan: " + U.getPlan() + " total a pagar: " + U.ObtenerTotalAPagar());
+        for (CuentaUsuario U : UsuarioDAO.obtenerTodos()){
+            System.out.println("Usuario: " + Conteo + "\nCorreo: " + U.getCorreoElectronico() + " \nMeses activo: " + U.getMesesActivo() + " \nPlan: " + U.getPlan() + " \nTotal a pagar: $" + U.ObtenerTotalAPagar() + "\n      - - - - - - ");
             Conteo ++;
 
             TotalRecaudado += U.ObtenerTotalAPagar();
         }
         System.out.println("Total recaudado: $" + TotalRecaudado);
     }
+    public static void ActualizarUsuario(){
+        System.out.println("----- ACTUALIZAR USUARIO -----");
+        System.out.print("Ingrese el ID del usuario: ");
+        int id = teclado.nextInt();
+        teclado.nextLine();
 
+        Usuario usuario = leerUsuario();
+        UsuarioDAO.actualizar(id, usuario);
+    }
 
+    public static void EliminarUsuario(){
+        System.out.println("----- ELIMINAR USUARIO -----");
+        System.out.print("Ingrese el ID del usuario: ");
+        int id = teclado.nextInt();
+        teclado.nextLine();
+        UsuarioDAO.eliminar(id);
+    }
+
+    public static Usuario leerUsuario(){
+        System.out.print("Ingrese el correo: ");
+        String correo = teclado.nextLine();
+        System.out.print("Ingrese los meses activos: ");
+        int meses = teclado.nextInt();
+        teclado.nextLine();
+        PlanSuscripcion plan = null;
+        boolean salir = false;
+        while(!salir){
+            System.out.println("Seleccione el plan");
+            System.out.println("1. Básico");
+            System.out.println("2. Estándar");
+            System.out.println("3. Premium");
+            int opcion = teclado.nextInt();
+            teclado.nextLine();
+            switch(opcion){
+                case 1 -> {
+                    plan = new PlanBasico();
+                    salir = true;
+                }
+                case 2 -> {
+                    plan = new PlanEstandar();
+                    salir = true;
+                }
+                case 3 -> {
+                    plan = new PlanPremium();
+                    salir = true;
+                }
+                default -> System.out.println("Opción inválida.");
+            }
+        }
+        return new Usuario(correo, meses, plan);
+    }
 }

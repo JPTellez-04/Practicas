@@ -106,12 +106,14 @@ public class EstacionamientoDAO {
         }
     }
     public static int contar(){
-        String sql = "SELECT COUNT(*) FROM ESTACIONAMIENTO";
+        String sql = "SELECT tipo_carro, COUNT(*) AS total FROM ESTACIONAMIENTO GROUP BY tipo_carro";
+        //String sql = "SELECT COUNT(*) FROM ESTACIONAMIENTO";
         try(Connection con = Conexion.createConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery()){
-            if(rs.next()){
-                return rs.getInt(1);
+            while(rs.next()){
+                String tipo =  rs.getString("tipo_carro");
+                int total = rs.getInt("total");
             }
         }catch(SQLException e){
             e.printStackTrace();

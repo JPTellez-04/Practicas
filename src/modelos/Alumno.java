@@ -53,13 +53,13 @@ public class Alumno {
         }
     }
 
-    public static List<Alumno> findAll() throws SQLException {
+    public static ArrayList<Alumno> findAll() throws SQLException {
         try(
                 Connection con = Conexion.createConnection();
                 PreparedStatement stmt = con.prepareStatement("SELECT * FROM Alumno");
                 ){
             ResultSet rs = stmt.executeQuery();
-            List<Alumno> alumnos = new ArrayList<>();
+            ArrayList<Alumno> alumnos = new ArrayList<>();
             while(rs.next()){
                 alumnos.add(new Alumno(
                         rs.getInt(1),
@@ -90,6 +90,7 @@ public class Alumno {
             throw new SQLException();
         }
     }
+
     public static void deleteStudentByMatricula(String matricula) throws SQLException {
         try(
                 Connection con = Conexion.createConnection();
@@ -101,6 +102,7 @@ public class Alumno {
             throw new SQLException();
         }
     }
+
     public static Integer numberOfMen() throws SQLException {
         try(
                 Connection con = Conexion.createConnection();
